@@ -1,0 +1,10 @@
+{
+  "name": "MediFlow BD",
+  "description": "Smart Emergency Ambulance Scheduling, Hospital Resource Management, and Emergency Support Platform for Bangladesh using OS scheduling and Banker's Algorithm.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

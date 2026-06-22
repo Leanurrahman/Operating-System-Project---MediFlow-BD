@@ -1,0 +1,311 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role concept and metadata info",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Authenticating identifier" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["hospital_admin", "ambulance_operator", "patient"] },
+        "phone": { "type": "string" },
+        "location": { "type": "string" },
+        "bloodGroup": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Ambulance": {
+      "title": "Ambulance",
+      "description": "Ambulance vehicle deployment instance track parameters with division/district/area location details",
+      "type": "object",
+      "properties": {
+        "ambulanceId": { "type": "string" },
+        "vehicleNumber": { "type": "string" },
+        "driverName": { "type": "string" },
+        "driverPhone": { "type": "string" },
+        "operatorId": { "type": "string" },
+        "location": { "type": "string" },
+        "division": { "type": "string" },
+        "district": { "type": "string" },
+        "area": { "type": "string" },
+        "coordinates": { "type": "object" },
+        "status": { "type": "string" },
+        "capacity": { "type": "integer" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["ambulanceId", "vehicleNumber", "driverName", "status"]
+    },
+    "Hospital": {
+      "title": "Hospital",
+      "description": "Registered hospital basic data with Bangladesh-wide tracking details",
+      "type": "object",
+      "properties": {
+        "hospitalId": { "type": "string" },
+        "hospitalName": { "type": "string" },
+        "location": { "type": "string" },
+        "division": { "type": "string" },
+        "district": { "type": "string" },
+        "area": { "type": "string" },
+        "coordinates": { "type": "object" },
+        "contact": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["hospitalId", "hospitalName"]
+    },
+    "HospitalResource": {
+      "title": "HospitalResource",
+      "description": "Hospital beds and emergency tools resources",
+      "type": "object",
+      "properties": {
+        "hospitalId": { "type": "string" },
+        "totalICU": { "type": "integer" },
+        "availableICU": { "type": "integer" },
+        "totalOxygen": { "type": "integer" },
+        "availableOxygen": { "type": "integer" },
+        "totalVentilators": { "type": "integer" },
+        "availableVentilators": { "type": "integer" },
+        "totalDoctors": { "type": "integer" },
+        "availableDoctors": { "type": "integer" },
+        "totalOT": { "type": "integer" },
+        "availableOT": { "type": "integer" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["hospitalId"]
+    },
+    "EmergencyRequest": {
+      "title": "EmergencyRequest",
+      "description": "Emergency priority SOS incident request record with Bangladesh-centric regions",
+      "type": "object",
+      "properties": {
+        "requestId": { "type": "string" },
+        "patientId": { "type": "string" },
+        "patientName": { "type": "string" },
+        "emergencyType": { "type": "string" },
+        "symptoms": { "type": "string" },
+        "severity": { "type": "string" },
+        "location": { "type": "string" },
+        "division": { "type": "string" },
+        "district": { "type": "string" },
+        "area": { "type": "string" },
+        "exactAddress": { "type": "string" },
+        "coordinates": { "type": "object" },
+        "needICU": { "type": "boolean" },
+        "needOxygen": { "type": "boolean" },
+        "needVentilator": { "type": "boolean" },
+        "priority": { "type": "integer" },
+        "status": { "type": "string" },
+        "assignedAmbulanceId": { "type": "string" },
+        "assignedHospitalId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["requestId", "patientName", "emergencyType", "severity"]
+    },
+    "SchedulingResult": {
+      "title": "SchedulingResult",
+      "description": "OS scheduling calculations result metrics log",
+      "type": "object",
+      "properties": {
+        "algorithm": { "type": "string" },
+        "inputRequests": { "type": "array" },
+        "sortedQueue": { "type": "array" },
+        "ganttChart": { "type": "array" },
+        "averageWaitingTime": { "type": "number" },
+        "averageTurnaroundTime": { "type": "number" },
+        "averageResponseTime": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["algorithm", "createdAt"]
+    },
+    "Allocation": {
+      "title": "Allocation",
+      "description": "Banker's Algorithm safety checking allocations matrix record",
+      "type": "object",
+      "properties": {
+        "requestId": { "type": "string" },
+        "hospitalId": { "type": "string" },
+        "availableResources": { "type": "array" },
+        "maxNeed": { "type": "array" },
+        "allocation": { "type": "array" },
+        "need": { "type": "array" },
+        "safeState": { "type": "boolean" },
+        "safeSequence": { "type": "array" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["hospitalId", "safeState", "createdAt"]
+    },
+    "Medicine": {
+      "title": "Medicine",
+      "description": "Dynamically addable store medicine information",
+      "type": "object",
+      "properties": {
+        "medicineId": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "stock": { "type": "integer" },
+        "description": { "type": "string" },
+        "prescriptionRequired": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["medicineId", "name", "price", "stock"]
+    },
+    "MedicineOrder": {
+      "title": "MedicineOrder",
+      "description": "Submitted client pharmacy orders records with regional breakdown",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string" },
+        "userId": { "type": "string" },
+        "items": { "type": "array" },
+        "totalPrice": { "type": "number" },
+        "deliveryAddress": { "type": "string" },
+        "division": { "type": "string" },
+        "district": { "type": "string" },
+        "area": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["orderId", "userId", "items", "totalPrice"]
+    },
+    "BloodDonor": {
+      "title": "BloodDonor",
+      "description": "Volunteer blood donors registries with dynamic region fields",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "bloodGroup": { "type": "string" },
+        "phone": { "type": "string" },
+        "location": { "type": "string" },
+        "division": { "type": "string" },
+        "district": { "type": "string" },
+        "area": { "type": "string" },
+        "availability": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["userId", "name", "bloodGroup", "phone"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Alert notification streams",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "message", "createdAt"]
+    },
+    "ActiveDispatch": {
+      "title": "ActiveDispatch",
+      "description": "Active dispatch assignment mapped from scheduler runtime state to synchronise operator dashboard",
+      "type": "object",
+      "properties": {
+        "dispatchId": { "type": "string" },
+        "patientId": { "type": "string" },
+        "patientName": { "type": "string" },
+        "assignedAmbulanceId": { "type": "string" },
+        "assignedOperatorId": { "type": "string" },
+        "status": { "type": "string" },
+        "queuePosition": { "type": "integer" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["patientName", "status"]
+    },
+    "ChatRoom": {
+      "title": "ChatRoom",
+      "description": "Unique room for real-time emergency support chat",
+      "type": "object",
+      "properties": {
+        "roomId": { "type": "string" },
+        "emergencyId": { "type": "string" },
+        "userId": { "type": "string" },
+        "operatorId": { "type": "string" },
+        "adminId": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["roomId", "emergencyId", "userId"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Unique message within an emergency chat room",
+      "type": "object",
+      "properties": {
+        "messageId": { "type": "string" },
+        "roomId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderRole": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "read": { "type": "boolean" }
+      },
+      "required": ["messageId", "roomId", "senderId", "senderRole", "text", "timestamp"]
+    }
+  },
+  "firestore": {
+    "users": {
+      "schema": "#/entities/User",
+      "description": "User accounts"
+    },
+    "emergencyRequests": {
+      "schema": "#/entities/EmergencyRequest",
+      "description": "Priority emergency patient incidents"
+    },
+    "ambulances": {
+      "schema": "#/entities/Ambulance",
+      "description": "Vehicles fleet registered dynamically"
+    },
+    "hospitals": {
+      "schema": "#/entities/Hospital",
+      "description": "Registered hospital hubs"
+    },
+    "resources": {
+      "schema": "#/entities/HospitalResource",
+      "description": "Live hospital beds and tools availability"
+    },
+    "schedulingResults": {
+      "schema": "#/entities/SchedulingResult",
+      "description": "CPU scheduler algorithm execution metrics histories"
+    },
+    "allocations": {
+      "schema": "#/entities/Allocation",
+      "description": "Banker's Algorithm safe allocations matrices"
+    },
+    "medicines": {
+      "schema": "#/entities/Medicine",
+      "description": "Store items inventory"
+    },
+    "medicineOrders": {
+      "schema": "#/entities/MedicineOrder",
+      "description": "Patient medicine checkout logs"
+    },
+    "bloodDonors": {
+      "schema": "#/entities/BloodDonor",
+      "description": "Emergency blood donor volunteers list"
+    },
+    "notifications": {
+      "schema": "#/entities/Notification",
+      "description": "Live alerts feed"
+    },
+    "activeDispatches": {
+      "schema": "#/entities/ActiveDispatch",
+      "description": "Real-time dispatch assignments synced with scheduler"
+    },
+    "chatRooms": {
+      "schema": "#/entities/ChatRoom",
+      "description": "Emergency support chat rooms"
+    },
+    "messages": {
+      "schema": "#/entities/ChatMessage",
+      "description": "Chat message logs"
+    }
+  }
+}

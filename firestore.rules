@@ -1,0 +1,101 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Default-deny catch-all safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // TEST CONNECTION RULES
+    match /test/{document} {
+      allow read, write: if true;
+    }
+
+    // USERS COLLECTION RULES
+    match /users/{userId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // EMERGENCIES COLLECTION RULES
+    match /emergencyRequests/{requestId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // AMBULANCES COLLECTION RULES
+    match /ambulances/{ambulanceId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // HOSPITALS COLLECTION RULES
+    match /hospitals/{hospitalId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // RESOURCES COLLECTION RULES
+    match /resources/{resourceId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // SCHEDULING RESULTS COLLECTION RULES
+    match /schedulingResults/{resultId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // ALLOCATIONS COLLECTION RULES
+    match /allocations/{allocationId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // MEDICINES COLLECTION RULES
+    match /medicines/{medicineId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // MEDICINE ORDERS COLLECTION RULES
+    match /medicineOrders/{orderId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // BLOOD DONORS COLLECTION RULES
+    match /bloodDonors/{donorId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // NOTIFICATIONS COLLECTION RULES
+    match /notifications/{notificationId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // GPS LOGS COLLECTION RULES
+    match /gpsLogs/{logId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // DHAKA NODES COLLECTION RULES
+    match /dhakaNodes/{nodeId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // ACTIVE DISPATCHES COLLECTION RULES
+    match /activeDispatches/{dispatchId} {
+      allow read, write: if true;
+    }
+
+    // CHAT ROOMS COLLECTION RULES
+    match /chatRooms/{roomId} {
+      allow read, write: if true;
+    }
+
+    // MESSAGES COLLECTION RULES
+    match /messages/{messageId} {
+      allow read, write: if true;
+    }
+
+    // SETTINGS COLLECTION RULES
+    match /settings/{settingsId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
